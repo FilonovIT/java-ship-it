@@ -20,7 +20,7 @@ public class PerishableParcel extends Parcel {
         return weight * PRICE;
     }
 
-    public boolean isExpired(int currentDay, int sendDay, int timeToLive) {
+    public boolean isExpired(int currentDay) {
         // currentDay — номер текущего дня месяца
         // sendDay — день месяца, в который посылка была отправлена
         // timeToLive - срок в днях, за который посылка не испортится
