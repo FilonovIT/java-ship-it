@@ -30,4 +30,9 @@ public abstract class Parcel {
         Parcel parcel = (Parcel) o;
         return Object.equals(description, parcel.description) && weight == parcel.weight && Object.equals(deliveryAddress, parcel.deliveryAddress) && sendDay == parcel.sendDay;
     }
+
+    @Override 
+    public int hashCode() {
+        return Object.hash(description, weight, deliveryAddress, sendDay);
+    }
 }
