@@ -25,8 +25,8 @@ public abstract class Parcel {
 
     @Override
     public boolean equals(Object o) {
-        if (this == 0) return true;
-        if (0 == null || getClass() != o.getClass()) return true;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return true;
         Parcel parcel = (Parcel) o;
         return Object.equals(description, parcel.description) && weight == parcel.weight && Object.equals(deliveryAddress, parcel.deliveryAddress) && sendDay == parcel.sendDay;
     }
