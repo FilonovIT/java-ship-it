@@ -10,6 +10,7 @@ public class DeliveryApp {
     private static final Scanner scanner = new Scanner(System.in);
     private static final List<Parcel> allParcels = new ArrayList<>();
     private static final HashMap<Integer, String> hashMap = new HashMap<>();
+    private static final List<Parcel> reportParcels = new ArrayList<>(); 
 
     public static void main(String[] args) {
         boolean running = true;
@@ -28,7 +29,9 @@ public class DeliveryApp {
                     calculateCosts();
                     break;
                 case 4:
-
+                    System.out.println("Введите местоположение:");
+                    String newLocation = scanner.nextLine();
+                    reportStatus(String newLocation);
                     break;
                 case 0:
                     running = false;
@@ -72,7 +75,7 @@ public class DeliveryApp {
             case 2:
                 parcelInformation();
                 parcel = new FragileParcel(hashMap.get(1), Integer.parseInt(hashMap.get(2)), hashMap.get(3), Integer.parseInt(hashMap.get(4)));
-                allParcels.add(parcel);
+                reportParcels.add(parcel);
                 break;
             case 3:
                 parcelInformation();
@@ -93,12 +96,22 @@ public class DeliveryApp {
             parcel.packageItem();
             parcel.deliver();
         }
+
+        for (Parcel parcel : reportParcels) {
+            parcel.packageItem();
+            parcel.deliver();
+        }
     }
 
     private static void calculateCosts() {
         int sum = 0;
         // Посчитать общую стоимость всех доставок и вывести на экран
         for (Parcel parcel : allParcels) {
+            sum += parcel.calculateDeliveryCost();
+        }
+        System.out.println("Сумма " + sum); // потом удалить
+
+        for (Parcel parcel : reportParcels) {
             sum += parcel.calculateDeliveryCost();
         }
         System.out.println("Сумма " + sum);
