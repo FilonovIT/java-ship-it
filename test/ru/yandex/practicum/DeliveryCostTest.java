@@ -15,54 +15,49 @@ public class DeliveryCostTest {
 
     parcelPerichable1 = new PerishableParcel("description", 25, "deliveryAddress", 10, 15);
     allParcels.add(parcelPerichable1);
-    parcelPerichable2 = new PerishableParcel("description", 25, "deliveryAddress", 10, 15);
+    parcelPerichable2 = new PerishableParcel("description", 50, "deliveryAddress", 10, 15);
     allParcels.add(parcelPerichable2);
 
     parcelFragile1 = new FragileParcel("description", 25, "deliveryAddress", 10);
     reportParcels.add(parcelFragile1);
-    parcelFragile2 = new FragileParcel("description", 25, "deliveryAddress", 10);
+    parcelFragile2 = new FragileParcel("description", 50, "deliveryAddress", 10);
     reportParcels.add(parcelFragile2);
   }
 
-  @Test
-  public void testCalculateDeliveryCostStandartParcel() {
-    int value = parcelStandert1.calculateDeliveryCost();
-    int valueP = 50;
-    Assertions.assertEquals(value, valueP);
-  }
-  
-  @Test
-  public void testCalculateDeliveryCostStandartParcel() {
-    int value = parcelStandert2.calculateDeliveryCost();
-    int valueP = 100;
-    Assertions.assertEquals(value, valueP);
-  }
+    @Test
+    public void calculateDeliveryCostStandartParcel() {
+      Assertions.assertEquals(50, parcelStandart1.calculateDeliveryCost());  
+    }
 
-  @Test
-  public void testCalculateDeliveryCostPerishableParcel() {
-    int value = parcelPerichable1.calculateDeliveryCost();
-    int valueP = 50;
-    Assertions.assertEquals(value, value1);
-  }
+    @Test
+    public void calculateDeliveryCostStandartParcel() {
+      Assertions.assertEquals(100, parcelStandart2.calculateDeliveryCost());  
+    }
   
-  @Test
-  public void testCalculateDeliveryCostPerishableParcel() {
-    int value = parcelPerichable2.calculateDeliveryCost();
-    int valueP = 50;
-    Assertions.assertEquals(value, value1);
-  }
+    @Test
+    public void calculateDeliveryCostPerishableParcel() {
+      Assertions.assertEquals(50, parcelPerichable1.calculateDeliveryCost());  
+    }
+
+    @Test
+    public void calculateDeliveryCostPerishableParcel() {
+      Assertions.assertEquals(100, parcelPerichable2.calculateDeliveryCost());  
+    }
   
-  @Test
-  public void testCalculateDeliveryCostFragileParcel() {
-    int value = parcelFragile1.calculateDeliveryCost();
-    int valueP = 50;
-    Assertions.assertEquals(value, value1);
-  }
+    @Test
+    public void calculateDeliveryFragileParcel() {
+      Assertions.assertEquals(50, parcelFragile1.calculateDeliveryCost());  
+    }
+
+    @Test
+    public void calculateDeliveryFragileParcel() {
+      Assertions.assertEquals(100, parcelFragile2.calculateDeliveryCost());  
+    }
   
-  @Test
-  public void testCalculateDeliveryCostFragileParcel() {
-    int value = parcelFragile2.calculateDeliveryCost();
-    int valueP = 50;
-    Assertions.assertEquals(value, value1);
+    @Test 
+    public void calculateDeliveryIsExpired() {
+      Assertions.assertFalse(parcelPerichable1.isExpired(10, 15));
+    }
+
+  
   }
-}
