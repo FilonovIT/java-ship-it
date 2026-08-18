@@ -75,6 +75,7 @@ public class DeliveryApp {
         int number;
         Parcel parcel;
         int timeToLive;
+        int currentDay;
 
         System.out.println("Введите тип посылки:");
         System.out.println("1 - Обычная");
@@ -100,9 +101,15 @@ public class DeliveryApp {
                 parcelInformation();
                 System.out.println("Введите количество дней, пока посылка не испортится:");
                 timeToLive = scanner.nextInt();
+                System.out.println("Введите текущий день месяца:")
+                currentDay = scanner.nextInt();
                 parcel = new PerishableParcel(hashMap.get(1), Integer.parseInt(hashMap.get(2)), hashMap.get(3), Integer.parseInt(hashMap.get(4)), timeToLive);
-                allParcels.add(parcel);
-                perishableParcelBox.addParcel(parcel);
+                
+                if (!parcel.isExpired(currentDay)) {
+                    allParcels.add(parcel);
+                    perishableParcelBox.addParcel(parcel);
+                } else {
+                    System.out.println("Посылка испортилась!");
                 break;
             default:
                 System.out.println("Неверно выбран тип посылки!");
@@ -151,7 +158,7 @@ public class DeliveryApp {
         System.out.println("Введите адрес назначения:");
         deliveryAddress = scanner.nextLine();
         System.out.println("Введите день отправления:");
-        sendDay = scanner.nextLine();
+        sendDay = scanner.nextLine(); // день месяца, в который посылка была отправлена
 
         hashMap.put(1, description);
         hashMap.put(2, weight);
