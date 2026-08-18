@@ -2,7 +2,7 @@ package ru.yandex.practicum.delivery;
 // хрупкая посылка
 public class FragileParcel extends Parcel implements Trackable {
     public static final int PRICE = 4;
-    public static final String MSG = "Посылка <<XXX>> обёрнута в защитную плёнку";
+    // public static final String MSG = "Посылка <<XXX>> обёрнута в защитную плёнку";
 
     public FragileParcel(String description, int weight, String deliveryAddress, int sendDay) {
         super(description, weight, deliveryAddress, sendDay);
