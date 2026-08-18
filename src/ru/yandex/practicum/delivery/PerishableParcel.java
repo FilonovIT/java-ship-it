@@ -24,6 +24,9 @@ public class PerishableParcel extends Parcel {
         // currentDay — номер текущего дня месяца
         // sendDay — день месяца, в который посылка была отправлена
         // timeToLive - срок в днях, за который посылка не испортится
-        return (sendDay + timeToLive) >= currentDay;
+        if ((sendDay + timeToLive) >= currentDay) {
+            return false;
+    } else {
+            return true;
     }
 }
