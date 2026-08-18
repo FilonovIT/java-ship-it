@@ -12,7 +12,7 @@ public class PerishableParcel extends Parcel {
     @Override
     public void packageItem() {
 
-        System.out.printf("Посылка %s упакована %n", description);
+        System.out.printf("Посылка <<%s>> упакована %n", description);
     }
 
     @Override
@@ -24,6 +24,7 @@ public class PerishableParcel extends Parcel {
         // currentDay — номер текущего дня месяца
         // sendDay — день месяца, в который посылка была отправлена
         // timeToLive - срок в днях, за который посылка не испортится
+        
         if ((sendDay + timeToLive) >= currentDay) {
             return false;
     } else {
