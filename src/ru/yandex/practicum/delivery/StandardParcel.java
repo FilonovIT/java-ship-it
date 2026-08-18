@@ -9,7 +9,7 @@ public class StandardParcel extends Parcel{
 
     @Override
     public void packageItem() {
-        System.out.printf("Посылка %s упакована %n", description);
+        System.out.printf("Посылка <<%s>> упакована %n", description);
     }
 
     @Override

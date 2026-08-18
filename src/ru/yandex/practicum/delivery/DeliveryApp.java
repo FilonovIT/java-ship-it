@@ -10,11 +10,11 @@ public class DeliveryApp {
     private static final Scanner scanner = new Scanner(System.in);
     private static final List<Parcel> allParcels = new ArrayList<>();
     private static final HashMap<Integer, String> hashMap = new HashMap<>();
-    private static final List<Parcel> reportParcels = new ArrayList<>(); 
+    private static final List<FragileParcel> reportParcels = new ArrayList<>();
 
-    private static final Parcel standartParcelBox = new ParcelBox(100);
-    private static final Parcel fragileParcelBox = new ParcelBox(100);
-    private static final Parcel perishableParcelBox = new ParcelBox(100);
+    private static final ParcelBox standartParcelBox = new ParcelBox(100);
+    private static final ParcelBox fragileParcelBox = new ParcelBox(100);
+    private static final ParcelBox perishableParcelBox = new ParcelBox(100);
 
     public static void main(String[] args) {
         boolean running = true;
@@ -44,9 +44,27 @@ public class DeliveryApp {
                     // }
                     System.out.println("Введите локацию:");
                     String newLocation = scanner.nextLine();
-                    for (Parcel parcel : reportParcels) {
+                    for (FragileParcel parcel : reportParcels) {
                         System.out.println(parcel.description);
                         parcel.reportStatus(newLocation);
+                    }
+                    break;
+                case 5:
+                    int typeBox;
+                    System.out.println("Введите тип коробки:");
+                    System.out.println("1 - Стандартная");
+                    System.out.println("2 - Хрупкая");
+                    System.out.println("3 - Скоропортящаяся");
+                    typeBox = scanner.nextInt();
+                    scanner.nextLine();
+                    if (typeBox == 1) {
+                        standartParcelBox.getAllParcels();
+                    } else {
+                        if (typeBox == 2) {
+                            fragileParcelBox.getAllParcels();
+                        } else {
+                            perishableParcelBox.getAllParcels();
+                        }
                     }
                     break;
                 case 0:
@@ -55,6 +73,33 @@ public class DeliveryApp {
                 default:
                     System.out.println("Неверный выбор.");
             }
+        }
+    }
+
+    private static void calculateCosts() {
+        int sum = 0;
+        // Посчитать общую стоимость всех доставок и вывести на экран
+        for (Parcel parcel : allParcels) {
+            sum += parcel.calculateDeliveryCost();
+        }
+//        System.out.println("Сумма " + sum); // потом удалить
+
+        for (Parcel parcel : reportParcels) {
+            sum += parcel.calculateDeliveryCost();
+        }
+        System.out.println("Сумма " + sum);
+    }
+
+    private static void sendParcels() {
+        // Пройти по allParcels, вызвать packageItem() и deliver()
+        for (Parcel parcel : allParcels) {
+            parcel.packageItem();
+            parcel.deliver();
+        }
+
+        for (Parcel parcel : reportParcels) {
+            parcel.packageItem();
+            parcel.deliver();
         }
     }
 
@@ -94,59 +139,33 @@ public class DeliveryApp {
             case 2:
                 parcelInformation();
                 parcel = new FragileParcel(hashMap.get(1), Integer.parseInt(hashMap.get(2)), hashMap.get(3), Integer.parseInt(hashMap.get(4)));
-                reportParcels.add(parcel);
+                reportParcels.add((FragileParcel) parcel);
                 fragileParcelBox.addParcel(parcel);
                 break;
             case 3:
                 parcelInformation();
                 System.out.println("Введите количество дней, пока посылка не испортится:");
                 timeToLive = scanner.nextInt();
-                System.out.println("Введите текущий день месяца:")
+                System.out.println("Введите текущий день месяца:");
                 currentDay = scanner.nextInt();
+                scanner.nextLine();
                 parcel = new PerishableParcel(hashMap.get(1), Integer.parseInt(hashMap.get(2)), hashMap.get(3), Integer.parseInt(hashMap.get(4)), timeToLive);
-                
-                if (!parcel.isExpired(currentDay)) {
+
+                if (!((PerishableParcel) parcel).isExpired(currentDay)) {
                     allParcels.add(parcel);
                     perishableParcelBox.addParcel(parcel);
                 } else {
-                    System.out.println("Посылка испортилась!");
+                    System.out.println("Посылка испортилась!"); }
                 break;
             default:
                 System.out.println("Неверно выбран тип посылки!");
                 break;
+                }
         }
-    }
-
-    private static void sendParcels() {
-        // Пройти по allParcels, вызвать packageItem() и deliver()
-        for (Parcel parcel : allParcels) {
-            parcel.packageItem();
-            parcel.deliver();
-        }
-
-        for (Parcel parcel : reportParcels) {
-            parcel.packageItem();
-            parcel.deliver();
-        }
-    }
-
-    private static void calculateCosts() {
-        int sum = 0;
-        // Посчитать общую стоимость всех доставок и вывести на экран
-        for (Parcel parcel : allParcels) {
-            sum += parcel.calculateDeliveryCost();
-        }
-        System.out.println("Сумма " + sum); // потом удалить
-
-        for (Parcel parcel : reportParcels) {
-            sum += parcel.calculateDeliveryCost();
-        }
-        System.out.println("Сумма " + sum);
-    }
 
     private static void parcelInformation() {
         String description;
-        String weight;
+        int weight;
         String deliveryAddress;
         String sendDay;
 
@@ -154,15 +173,22 @@ public class DeliveryApp {
         description = scanner.nextLine();
 
         System.out.println("Введите вес посылки:");
-        weight = scanner.nextLine();
+        weight = scanner.nextInt();
+        scanner.nextLine();
+        if (weight <= 0) {
+            System.out.println("Значение должно быть больше 0! Введите корректные данные!");
+            return;
+        }
         System.out.println("Введите адрес назначения:");
         deliveryAddress = scanner.nextLine();
         System.out.println("Введите день отправления:");
         sendDay = scanner.nextLine(); // день месяца, в который посылка была отправлена
 
         hashMap.put(1, description);
-        hashMap.put(2, weight);
+        hashMap.put(2, String.valueOf(weight)); // костыль
         hashMap.put(3, deliveryAddress);
         hashMap.put(4, sendDay);
     }
 }
+
+

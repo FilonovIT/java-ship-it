@@ -1,8 +1,11 @@
 package ru.yandex.practicum.delivery;
 
+import java.util.Objects;
+
 public abstract class Parcel {
     //добавьте реализацию и другие необходимые классы
     protected String description;
+
     protected int weight; // вес
     protected String deliveryAddress;
     protected int sendDay;
@@ -18,7 +21,7 @@ public abstract class Parcel {
     public abstract void packageItem();
 
     public void deliver() {
-        System.out.printf("Посылка <<%s>> доставлена по адресу <<%s>>", description, deliveryAddress); // xxx - описание, посылки yyyy - адрес назначения
+        System.out.printf("Посылка <<%s>> доставлена по адресу <<%s>> %n", description, deliveryAddress); // xxx - описание, посылки yyyy - адрес назначения
     }
 
     public abstract int calculateDeliveryCost();
@@ -28,11 +31,11 @@ public abstract class Parcel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return true;
         Parcel parcel = (Parcel) o;
-        return Object.equals(description, parcel.description) && weight == parcel.weight && Object.equals(deliveryAddress, parcel.deliveryAddress) && sendDay == parcel.sendDay;
+        return Objects.equals(description, parcel.description) && weight == parcel.weight && Objects.equals(deliveryAddress, parcel.deliveryAddress) && sendDay == parcel.sendDay;
     }
 
-    @Override 
+    @Override
     public int hashCode() {
-        return Object.hash(description, weight, deliveryAddress, sendDay);
+        return Objects.hash(description, weight, deliveryAddress, sendDay);
     }
 }
