@@ -190,5 +190,3 @@ public class DeliveryApp {
         hashMap.put(4, sendDay);
     }
 }
-
-
