@@ -1,16 +1,14 @@
 package ru.yandex.practicum.delivery;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class DeliveryApp {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static final List<Parcel> allParcels = new ArrayList<>();
     private static final Map<Integer, String> hashMap = new HashMap<>(); // интерфейс Map<>
-    private final List<FragileParcel> reportParcels = new ArrayList<>(); // проверить без static
+    private static final List<FragileParcel> reportParcels = new ArrayList<>(); // reportParcels используется в static методе main, не может быть не static
+                                                                                // логика задана первоначально по заданию.
 
     private static final ParcelBox standartParcelBox = new ParcelBox(100);
     private static final ParcelBox fragileParcelBox = new ParcelBox(100);
