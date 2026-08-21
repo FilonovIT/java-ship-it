@@ -9,8 +9,8 @@ public class DeliveryApp {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static final List<Parcel> allParcels = new ArrayList<>();
-    private static final HashMap<Integer, String> hashMap = new HashMap<>();
-    private static final List<FragileParcel> reportParcels = new ArrayList<>();
+    private static final Map<Integer, String> hashMap = new HashMap<>(); // интерфейс Map<>
+    private final List<FragileParcel> reportParcels = new ArrayList<>(); // проверить без static
 
     private static final ParcelBox standartParcelBox = new ParcelBox(100);
     private static final ParcelBox fragileParcelBox = new ParcelBox(100);
